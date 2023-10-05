@@ -1,0 +1,54 @@
+<!-- FILEPATH: /c:/working/foundry-landing-site/index.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Website Front Page</title>
+        <style>
+            #start-btn, #stop-btn {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            #start-btn:hover, #stop-btn:hover {
+                background-color: #3e8e41;
+            }
+            #status {
+                font-size: 24px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="start-btn">Start</button>
+        <button id="stop-btn">Stop</button>
+        <p>Status: <span id="status">stopped</span></p>
+        <script>
+            const startBtn = document.getElementById("start-btn");
+            const stopBtn = document.getElementById("stop-btn");
+            const status = document.getElementById("status");
+
+            startBtn.addEventListener("click", () => {
+                status.innerText = "starting";
+                // Add code to start the process here
+                setTimeout(() => {
+                    status.innerText = "running";
+                }, 2000);
+            });
+
+            stopBtn.addEventListener("click", () => {
+                status.innerText = "stopping";
+                // Add code to stop the process here
+                setTimeout(() => {
+                    status.innerText = "stopped";
+                }, 2000);
+            });
+        </script>
+    </body>
+</html>
