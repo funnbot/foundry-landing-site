@@ -1,54 +1,80 @@
-<!-- FILEPATH: /c:/working/foundry-landing-site/index.html -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Website Front Page</title>
-        <style>
-            #start-btn, #stop-btn {
-                background-color: #4CAF50;
-                border: none;
-                color: white;
-                padding: 15px 32px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-            }
-            #start-btn:hover, #stop-btn:hover {
-                background-color: #3e8e41;
-            }
-            #status {
-                font-size: 24px;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-        <button id="start-btn">Start</button>
-        <button id="stop-btn">Stop</button>
-        <p>Status: <span id="status">stopped</span></p>
-        <script>
-            const startBtn = document.getElementById("start-btn");
-            const stopBtn = document.getElementById("stop-btn");
-            const status = document.getElementById("status");
 
-            startBtn.addEventListener("click", () => {
-                status.innerText = "starting";
-                // Add code to start the process here
-                setTimeout(() => {
-                    status.innerText = "running";
-                }, 2000);
-            });
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1471.0/aws-sdk.min.js"
+        integrity="sha512-LIBN8HW7QcIkxdoStvE2caF53ESjZRPrCqedslLthIFDcC5jJgq0WjyJHh1FhH0jERclS0OPJiIbib9jgXqZ/A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+        integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./index.js"></script>
 
-            stopBtn.addEventListener("click", () => {
-                status.innerText = "stopping";
-                // Add code to stop the process here
-                setTimeout(() => {
-                    status.innerText = "stopped";
-                }, 2000);
-            });
-        </script>
-    </body>
+    <title>Foundry Status</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        button:active {
+            background-color: #3e8e91;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        .status {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #password {
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            padding: 59px 60px;
+            font-size: larger;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://foundry.funnbot.click">Click To Enter FoundryVTT</a>
+    <button id="start-btn">Start</button>
+    <button id="stop-btn">Stop</button>
+    <p class="status">Status: <span id="status">stopped</span></p>
+    <input type="password" id="password" name="password">
+</body>
+
 </html>
