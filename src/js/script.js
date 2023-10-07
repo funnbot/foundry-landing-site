@@ -54,6 +54,7 @@ function set_status(s) {
 }
 
 function get_credentials() {
+    localStorage.getItem("password");
     const elem = document.getElementById("password");
     const pwd = elem.value;
     const encrypted = "U2FsdGVkX18AOt+VQEHRyIySO+GDLJKatH/aAHIxmHoxIC1Xepx5vK78Hf3UN8f11snX7TkCdBJEKSWr0bkgaroUFL0sO+x8+YaZIMgcBH8uCWbXuU92l2E3FNpSVV/1hdfacofM/3IOE57HyXfvoQ==";
@@ -138,16 +139,31 @@ function stop_ec2_instance() {
     })
 }
 
-window.addEventListener('load', () => {
-    set_status(STATUS.unknown);
-    const startBtn = document.getElementById("start-btn");
-    const stopBtn = document.getElementById("stop-btn");
-
-    startBtn.addEventListener("click", () => {
-        debounce(start_ec2_instance);
+function check_server_status() {
+    const url = "https://foundry.funnbot.click/api/status";
+    const request = new Request(url, {
+        method: "GET",
+        headers: new Headers({
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Cache-Control": "no-cache no-store",
+            "Expires": "0",
+        }),
     });
+    fetch(request).then(resp => {
 
-    stopBtn.addEventListener("click", () => {
-        debounce(stop_ec2_instance);
-    });
+    }).catch(err => {
+
+    })
+}
+
+set_status(STATUS.unknown);
+const startBtn = document.getElementById("start-btn");
+const stopBtn = document.getElementById("stop-btn");
+
+startBtn.addEventListener("click", () => {
+    debounce(start_ec2_instance);
+});
+
+stopBtn.addEventListener("click", () => {
+    debounce(stop_ec2_instance);
 });

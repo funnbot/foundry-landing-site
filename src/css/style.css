@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #222;
+    text-align: center;
+    min-height: 100vh;
+    max-width: 768px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(yellow, orange);
+}
+
+@media (max-width: 636px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    main h3 {
+        font-size: 1.5rem;
+    }
+
+    main li {
+        font-size: 1rem;
+    }
+}
+
+footer {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+footer a {
+    text-decoration: none;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+footer p {
+    margin: 1rem 0;
+}
+
+header h1 {
+    margin: 0.5rem 0;
+    font-size: 3rem;
+}
+
+header nav {
+    max-width: 80%;
+    margin: 1rem auto;
+}
+
+header p {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+}
+
+header a {
+    text-decoration: none;
+    display: block;
+}
+
+header a+a {
+    margin: 0.5rem 0;
+}
+
+header time {
+    display: block;
+    margin: 1rem 0;
+}
+
+main {
+    flex: 1;
+}
+
+main h2 {
+    margin: 0.5rem 0;
+    font-size: 2rem;
+}
+
+main ul {
+    list-style: none;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5),
+        inset -1px -1px 1px rgba(0, 0, 0, 0.5);
+}
+
+main li {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+main body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+main button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+main button:hover {
+    background-color: #3e8e41;
+}
+
+main button:active {
+    background-color: #3e8e91;
+}
+
+main button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
+main .status {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+main a {
+    padding: 59px 60px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+#password {
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+#loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle, yellow, orange);
+}
