@@ -37,7 +37,8 @@ const config = {
         new CopyPlugin({
             patterns: [
                 { from: `${root}/robots.txt`, to: "." },
-                { from: `${root}/CNAME`, to: "." }
+                { from: `${root}/CNAME`, to: "." },
+                { from: `${root}/.nojekyll`, to: "." }
             ]
         })
 
