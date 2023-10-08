@@ -1,4 +1,5 @@
 import "../css/style.css";
+import { EC2Client } from "@aws-sdk/client-ec2";
 
 const STATUS = {
     incorrectPassword: "Incorrect Password",
@@ -89,6 +90,8 @@ const FOUNDRY_INST = "i-0f74a54dd5e573e4e";
 
 function start_ec2_instance() {
     if (is_status(STATUS.errorStarting) || is_status(STATUS.starting) || is_status(STATUS.wait)) return;
+
+    const ec22 = new EC2Client({ region: "us-west-1" });
 
     const ec2 = get_ec2_instance();
     if (ec2 === undefined) {

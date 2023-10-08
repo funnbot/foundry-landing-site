@@ -9,5 +9,8 @@
   ],
   "typeAcquisition": {
     "enable": true,
+    "include": [
+      "aws-sdk"
+    ]
   }
 }
