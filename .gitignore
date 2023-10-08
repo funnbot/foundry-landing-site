@@ -7,3 +7,5 @@
 !.yarn/versions
 
 .vscode/
+node_modules/
+/dist/
