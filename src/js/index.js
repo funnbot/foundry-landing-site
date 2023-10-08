@@ -1,3 +1,5 @@
+import "../css/style.css";
+
 const STATUS = {
     incorrectPassword: "Incorrect Password",
     wait: "Wait",
@@ -15,14 +17,14 @@ let status_value = STATUS.unknown;
 function disable_buttons() {
     const startBtn = document.getElementById("start-btn");
     const stopBtn = document.getElementById("stop-btn");
-    startBtn.disabled = "disabled";
-    stopBtn.disabled = "disabled";
+    startBtn.setAttribute("disabled", "disabled");
+    stopBtn.setAttribute("disabled", "disabled");
 }
 function enable_buttons() {
     const startBtn = document.getElementById("start-btn");
     const stopBtn = document.getElementById("stop-btn");
-    startBtn.disabled = undefined;
-    stopBtn.disabled = undefined;
+    startBtn.removeAttribute("disabled");
+    stopBtn.removeAttribute("disabled");
 }
 
 let debounceMs = 5000;
