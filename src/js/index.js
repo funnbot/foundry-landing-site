@@ -1,5 +1,5 @@
 import "../css/style.css";
-import { EC2Client } from "@aws-sdk/client-ec2";
+// import { EC2Client } from "@aws-sdk/client-ec2";
 
 const STATUS = {
     incorrectPassword: "Incorrect Password",
@@ -33,7 +33,6 @@ let lastCalledId = undefined;
 let lastCalled = 0;
 function debounce(callback) {
     const now = Date.now();
-    console.log(now)
     if (now - lastCalled >= debounceMs) {
         disable_buttons();
         lastCalled = now;
@@ -48,12 +47,15 @@ function debounce(callback) {
     }
 }
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function is_status(s) {
     return status_value === s;
 }
 function set_status(s) {
     status_value = s;
-    document.getElementById("status").innerText = s;
 }
 
 function get_credentials() {
@@ -91,8 +93,6 @@ const FOUNDRY_INST = "i-0f74a54dd5e573e4e";
 function start_ec2_instance() {
     if (is_status(STATUS.errorStarting) || is_status(STATUS.starting) || is_status(STATUS.wait)) return;
 
-    const ec22 = new EC2Client({ region: "us-west-1" });
-
     const ec2 = get_ec2_instance();
     if (ec2 === undefined) {
         set_status(STATUS.incorrectPassword);
@@ -116,6 +116,8 @@ function start_ec2_instance() {
         }
         enable_buttons();
     })
+
+    globalThis.checkFoundryTimeout = 5000;
 }
 
 function stop_ec2_instance() {
@@ -142,9 +144,27 @@ function stop_ec2_instance() {
         }
         enable_buttons();
     })
+
+    globalThis.checkFoundryTimeout = 4000;
 }
 
-function check_server_status() {
+async function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 8000 } = options;
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+
+    const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal
+    });
+    clearTimeout(id);
+
+    return response;
+}
+
+globalThis.checkFoundryTimeout = 5000;
+async function check_foundry_status() {
     const url = "https://foundry.funnbot.click/api/status";
     const request = new Request(url, {
         method: "GET",
@@ -154,11 +174,58 @@ function check_server_status() {
             "Expires": "0",
         }),
     });
-    fetch(request).then(resp => {
+    const timeout = globalThis.checkFoundryTimeout;
+    globalThis.checkFoundryTimeout = Math.floor(globalThis.checkFoundryTimeout * 1.5);
+    let resp = undefined;
+    try {
+        resp = await fetchWithTimeout(request, { timeout });
+    } catch (e) {
+        if (e.type === "cors") {
+            throw Error("cors");
+        } else if (e.type === "basic") {
+            return { status: "error" }
+        } else {
+            console.log({e});
+            throw Error(e);
+        }
+    }
+    let body = undefined;
+    try {
+        body = await resp.json();
+    } catch {
+        throw Error("Bad Response: " + resp);
+    }
+    if (body?.active) {
+        return { status: "ok", active: true, world: body?.world ?? "none", users: body?.users ?? 0 }
+    } else {
+        return { status: "ok", active: false }
+    }
+}
 
-    }).catch(err => {
+const foundryStatus = document.getElementById("foundry-status");
+async function update_foundry_status() {
+    const prev = foundryStatus.innerHTML;
+    foundryStatus.innerHTML = `<b>Checking Status...</b>`
+    await delay(200);
+    foundryStatus.innerHTML = prev;
+    const { status, ...r } = await check_foundry_status();
+    if (status === "error") {
+        if (r.type === "cors") {
+            throw Error(status + ": " + r);
+        }
+        foundryStatus.innerHTML = `<b>Status:</b> not running<br>`
+    } else if (status === "ok") {
+        if (r.active) {
+            foundryStatus.innerHTML = `<b>Status:</b> running <a href="https://foundry.funnbot.click">Click To Enter FoundryVTT</a><br><b>World:</b> ${r.world}<br><b>Users:</b> ${r.users}<br>`
+        } else {
+            foundryStatus.innerHTML = `<b>Status:</b> running`
+        }
+    } else {
+        throw Error(status + r);
+    }
 
-    })
+    await delay(1000);
+    update_foundry_status();
 }
 
 set_status(STATUS.unknown);
@@ -172,3 +239,7 @@ startBtn.addEventListener("click", () => {
 stopBtn.addEventListener("click", () => {
     debounce(stop_ec2_instance);
 });
+
+(async () => {
+    update_foundry_status();
+})();

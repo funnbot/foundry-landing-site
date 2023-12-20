@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Funnbot Foundry Status</title>
+    <title>Foundry Server Status</title>
 
     <link rel="canonical" href="https://funnbot.click" />
 
@@ -53,16 +53,16 @@
         "@context": "http://schema.org",
         "@type": "Webpage",
         "url": "https://moderntemplate.site",
-        "name": "HTML Template",
-        "headline": "HTML Template",
-        "description": "Modern HTML Starter Template",
+        "name": "Foundry Server",
+        "headline": "Foundry Server",
+        "description": "Foundry Server Status",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": "https://moderntemplate.site"
+          "@id": "https://funnbot.click"
         },
         "publisher": {
           "@type": "Person",
-          "name": "Igor Agapov"
+          "name": "Funnbot"
         },
         "datePublished": "2020-12-12",
       }
@@ -79,24 +79,21 @@
 <body>
     <header>
         <h1>
-            Modern HTML <br />
-            Starter Template
+            Foundry Server Status
         </h1>
         <time></time>
     </header>
 
     <main>
-        <div>
-            <a href="https://foundry.funnbot.click">Click To Enter FoundryVTT</a>
-        </div>
-
+        <br><br>
         <div>
             <button id="start-btn">Start</button>
             <button id="stop-btn">Stop</button>
         </div>
 
-        <p class="status">Status: <span id="status">stopped</span></p>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required="true" placeholder="password">
+        <br><br>
+        <div id="foundry-status"><b>Checking Status...</b></div>
     </main>
 
     <footer>
