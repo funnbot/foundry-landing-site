@@ -88,7 +88,7 @@ function get_ec2_instance() {
     return globalThis.ec2Instance;
 }
 
-const FOUNDRY_INST = "i-0f74a54dd5e573e4e";
+const FOUNDRY_INST = "i-05799531d26c6725a";
 
 function start_ec2_instance() {
     if (is_status(STATUS.errorStarting) || is_status(STATUS.starting) || is_status(STATUS.wait)) return;
